@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AMA TRADING PARTNERS SRL — Retail alimentar & convenience</title>
+  <meta name="description" content="AMA TRADING PARTNERS SRL — retail alimentar & convenience, aprovizionare responsabilă, optimizare sortiment și soluții digitale pentru magazine de cartier și mini-marketuri." />
+  <meta name="color-scheme" content="light only" />
+  <style>
+    /* ---------------------------
+       Reset de bază + variabile
+       --------------------------- */
+    :root{
+      --bg:#f4f6f8;
+      --panel:#ffffff;
+      --ink:#0f172a;
+      --muted:#5b6577;
+      --accent:#2563eb;
+      --accent-2:#0ea5e9;
+      --ok:#16a34a;
+      --danger:#dc2626;
+      --ring: 0 0 0 3px rgba(37,99,235,.25);
+      --radius:16px;
+      --shadow:0 10px 30px rgba(16,24,40,.08);
+      --shadow-lg:0 24px 60px rgba(16,24,40,.14);
+      --grid:clamp(16px, 4vw, 48px);
+      --container: min(1120px, 92vw);
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      font: 16px/1.6 "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eef2f7 0%, #f7f8fb 40%, #ffffff 100%);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    img{max-width:100%;display:block}
+    a{color:inherit;text-decoration:none}
+    .container{width:var(--container);margin:0 auto;padding:0 var(--grid)}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      gap:.5rem;padding:.85rem 1.25rem;border-radius:14px;
+      background:var(--accent); color:#fff; font-weight:600;
+      border:1px solid rgba(0,0,0,.05); box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      cursor:pointer; user-select:none;
+    }
+    .btn:hover{transform:translateY(-1px); box-shadow: var(--shadow-lg)}
+    .btn:focus-visible{outline:none; box-shadow: var(--shadow-lg), var(--ring)}
+    .btn.secondary{background:#fff;color:var(--ink);border-color:#e5e7eb}
+    .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.45)}
+    .badge{
+      display:inline-block; padding:.35rem .6rem; border-radius:999px;
+      background: rgba(37,99,235,.12); color: var(--accent); font-weight:600; font-size:.8rem;
+      border:1px solid rgba(37,99,235,.2);
+    }
+    .section{padding: clamp(56px, 10vw, 120px) 0}
+    .panel{
+      background:var(--panel); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: clamp(20px, 5vw, 36px);
+    }
+    .kicker{letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:800;margin-bottom:.5rem}
+    h1,h2,h3{line-height:1.2; margin:0 0 12px}
+    h1{font-size: clamp(28px, 5vw, 56px)}
+    h2{font-size: clamp(22px, 3.2vw, 36px)}
+    h3{font-size: clamp(18px, 2.2vw, 24px)}
+    p{color:var(--muted);margin:.35rem 0 1rem}
+    ul{margin:0;padding-left:1rem}
+    /* ---------------------------
+       Header fix + nav cu scroll
+       --------------------------- */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter: saturate(1.2) blur(6px);
+      background:rgba(255,255,255,.75); border-bottom:1px solid rgba(2, 6, 23, .06);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between; gap:1rem; height:70px;
+    }
+    .brand{display:flex; align-items:center; gap:.75rem; font-weight:900}
+    .brand .dot{width:12px;height:12px;border-radius:50%;background:var(--accent)}
+    .nav a.link{
+      padding:.55rem .8rem;border-radius:10px;color:#334155;font-weight:600;
+      transition: background .2s ease, color .2s ease;
+    }
+    .nav a.link:hover{background:#eef2ff;color:#111827}
+    .nav .cta{display:flex; gap:.5rem}
+    /* ---------------------------
+       Hero (fond imagine)
+       --------------------------- */
+    .hero{
+      position:relative; overflow:hidden; border-radius:24px; box-shadow: var(--shadow-lg);
+      min-height: 520px; display:grid; align-items:end;
+      background: #0b1220;
+      isolation:isolate;
+    }
+    .hero::before{
+      /* Foto grocery retail (Unsplash, liberă pentru utilizare) */
+      content:""; position:absolute; inset:0;
+      background-image: url('https://images.unsplash.com/photo-1586201375761-83865001e31b?q=80&w=1920&auto=format&fit=crop');
+      background-size:cover; background-position:center;
+      filter: brightness(.65) saturate(1.05);
+      z-index:-2;
+    }
+    .hero::after{
+      content:""; position:absolute; inset:0;
+      background: radial-gradient(60% 60% at 20% 10%, rgba(14,165,233,.35) 0%, rgba(14,165,233,0) 60%),
+                  linear-gradient(180deg, rgba(2,6,23,.0) 0%, rgba(2,6,23,.55) 55%, rgba(2,6,23,.8) 100%);
+      z-index:-1;
+    }
+    .hero .inner{color:#fff; padding: clamp(20px, 4vw, 36px)}
+    .hero h1{color:#fff}
+    .hero p{color:#e5edff; max-width: 720px}
+    .hero .actions{display:flex; gap:.8rem; flex-wrap:wrap; margin-top:1rem}
+    /* ---------------------------
+       Griduri utilitare
+       --------------------------- */
+    .grid-3{display:grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2vw, 24px)}
+    .grid-2{display:grid; grid-template-columns: repeat(2, 1fr); gap: clamp(16px, 2vw, 24px)}
+    @media (max-width:960px){ .grid-3{grid-template-columns:1fr 1fr} }
+    @media (max-width:720px){ .grid-3,.grid-2{grid-template-columns:1fr} .nav .hide-sm{display:none} }
+    /* ---------------------------
+       Carduri servicii
+       --------------------------- */
+    .card{
+      background:#fff; border-radius:18px; padding:24px; border:1px solid #eef2f7;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      position:relative; overflow:hidden;
+    }
+    .card:hover{ transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color:#e2e8f0}
+    .card .icon{
+      width:44px;height:44px;border-radius:12px; display:grid;place-items:center;
+      background:linear-gradient(135deg, rgba(14,165,233,.18), rgba(37,99,235,.18));
+      border:1px solid rgba(37,99,235,.25); color:var(--accent)
+    }
+    /* ---------------------------
+       Avantaje (liste)
+       --------------------------- */
+    .adv{display:grid; grid-template-columns: 64px 1fr; gap:16px; align-items:start}
+    .adv .num{
+      width:48px;height:48px;border-radius:12px; display:grid; place-items:center;
+      background:#eef2ff; color:var(--accent); font-weight:800
+    }
+    /* ---------------------------
+       Timeline proces
+       --------------------------- */
+    .timeline{position:relative; padding-left:24px}
+    .timeline::before{content:""; position:absolute; left:12px; top:4px; bottom:4px; width:2px; background:#e5e7eb}
+    .step{position:relative; margin-bottom:22px}
+    .step::before{
+      content:""; position:absolute; left:-2px; top:.3rem; width:10px; height:10px; border-radius:999px; background:var(--accent)
+    }
+    .arrow{font-weight:800; color:#94a3b8}
+    /* ---------------------------
+       Footer / Contacte
+       --------------------------- */
+    footer{padding:48px 0; color:#64748b}
+    footer .box{display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap}
+    footer a{color:var(--accent)}
+    /* ---------------------------
+       Modale: formular & confirmare
+       --------------------------- */
+    .modal-backdrop{
+      position:fixed; inset:0; display:none; place-items:center;
+      background: rgba(2,6,23,.55); z-index:100;
+    }
+    .modal{
+      width:min(640px, 92vw); background:#fff; border-radius:22px;
+      box-shadow: var(--shadow-lg); padding:28px; transform: translateY(8px);
+      animation: rise .25s ease forwards;
+    }
+    @keyframes rise{to{transform: translateY(0)}}
+    .modal header{position:relative; background:transparent; backdrop-filter:none; border:none; padding:0 0 10px}
+    .modal .close{
+      position:absolute; right:0; top:-6px; width:36px; height:36px; border-radius:12px; border:1px solid #e5e7eb;
+      display:grid; place-items:center; background:#fff; cursor:pointer
+    }
+    .field{display:flex; flex-direction:column; gap:.4rem}
+    .field input,.field textarea{
+      padding: .9rem 1rem; border:1px solid #e5e7eb; border-radius:12px; background:#fff; color:#0f172a;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+    .field input:focus,.field textarea:focus{outline:none; border-color:#c7d2fe; box-shadow: var(--ring)}
+    .form-grid{display:grid; grid-template-columns: 1fr 1fr; gap:16px}
+    .form-grid .full{grid-column:1 / -1}
+    .helper{font-size:.85rem;color:#64748b}
+    .hidden{display:none}
+    /* ---------------------------
+       Animații smooth scroll
+       --------------------------- */
+    html{scroll-behavior:smooth}
+    .fade-in{
+      opacity:0; transform: translateY(10px);
+      animation: fade .6s ease forwards; animation-delay:.15s;
+    }
+    @keyframes fade{to{opacity:1; transform:none}}
+  </style>
+</head>
+<body>
+  <!-- =======================================
+       HEADER FIX CU NAV
+       ======================================= -->
+  <header aria-label="Antet navigație">
+    <div class="container nav">
+      <a href="#acasa" class="brand" aria-label="AMA Trading Partners SRL">
+        <span class="dot" aria-hidden="true"></span>
+        <span>AMA Trading Partners</span>
+      </a>
+      <nav aria-label="Meniu principal">
+        <a class="link hide-sm" href="#despre">Povestea noastră</a>
+        <a class="link hide-sm" href="#servicii">Soluții</a>
+        <a class="link hide-sm" href="#avantaje">De ce noi</a>
+        <a class="link hide-sm" href="#proces">Cum lucrăm</a>
+        <a class="link" href="#contacte">Date de contact</a>
+      </nav>
+      <div class="cta">
+        <button class="btn secondary" id="openForm" aria-haspopup="dialog" aria-controls="modalForm">Trimite mesaj</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =======================================
+       HERO
+       ======================================= -->
+  <main id="acasa" class="container section">
+    <section class="hero" role="banner" aria-label="Retail alimentar & convenience">
+      <div class="inner">
+        <span class="badge">Retail alimentar & convenience</span>
+        <h1>Împingem schimbarea în magazinele de cartier — prospețime, date și experiențe rapide.</h1>
+        <p>
+          AMA TRADING PARTNERS SRL conectează furnizori locali și internaționali cu magazine alimentare
+          și convenience din București și împrejurimi. Combinăm sourcing responsabil, monitorizare a prospețimii
+          și instrumente digitale în magazin pentru a livra creștere sănătoasă, pe termen lung.
+        </p>
+        <div class="actions">
+          <a class="btn ghost" href="#servicii">Vezi serviciile</a>
+          <button class="btn" id="heroOpen">Solicită o ofertă</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =======================================
+       DESPRE NOI
+       ======================================= -->
+  <section id="despre" class="section">
+    <div class="container grid-2">
+      <div class="panel fade-in">
+        <span class="kicker">Cine suntem</span>
+        <h2>Mai aproape de clienți, mai buni la raft.</h2>
+        <p>
+          Suntem o echipă cu experiență operațională în retail alimentar, comerț de proximitate și distribuție frigorifică,
+          construită în jurul unor principii clare: transparență în preț, trasabilitate completă și parteneriat pe termen lung.
+        </p>
+        <p>
+          Lucrăm cu magazine independente, rețele locale și micro-lanțuri de mini-marketuri, oferind un mix de produse
+          gândit pe cartier, nu pe teorie. Analizăm bonul mediu și rotația, apoi ajustăm sortimentul pentru a elimina pierderile.
+        </p>
+        <p>
+          Folosim date zilnice din punctul de vânzare pentru a optimiza stocurile și a crește marja brută fără a sacrifica prospețimea.
+          Implementăm planograme simple, ușor de menținut de către echipe mici.
+        </p>
+        <p>
+          La capitolul logistica, operăm rute last-mile flexibile pentru produse proaspete, cu ferestre de livrare dimineața devreme
+          și după-amiaza, astfel încât rafturile critice să nu rămână goale în orele de vârf.
+        </p>
+        <p>
+          Suntem înregistrați în București și activăm în Sectorul 2 și zonele limitrofe, cu extinderi planificate în regiunea metropolitană.
+        </p>
+      </div>
+      <div class="panel fade-in">
+        <span class="kicker">Date companie</span>
+        <h3>AMA TRADING PARTNERS SRL</h3>
+        <p><strong>Adresă operațională:</strong> STR. GIUSEPPE GARIBALDI NR. 26A SC. B ET. 2 AP. 24, SECTORUL 2, București</p>
+        <p><strong>Industrie:</strong> Grocery & Convenience Retailers, Food & Beverage Retailers, Retail</p>
+        <p><strong>Contact oficial:</strong> <a href="mailto:info@amatradingpartners.pro">info@amatradingpartners.pro</a></p>
+        <p class="helper">Respectăm standardele de conformitate, lanțul rece și politicile de confidențialitate.
+          Nu colectăm numere de telefon în formularul de contact.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================
+       SERVICII
+       ======================================= -->
+  <section id="servicii" class="section" aria-labelledby="titlu-servicii">
+    <div class="container">
+      <span class="kicker">Ce facem concret</span>
+      <h2 id="titlu-servicii">Soluții pentru magazine alimentare și convenience</h2>
+      <div class="grid-3" style="margin-top:18px">
+        <article class="card">
+          <div class="icon" aria-hidden="true">🛒</div>
+          <h3>Aprovizionare responsabilă & lanț rece</h3>
+          <p>
+            Selectăm furnizori certificați pentru lactate, panificație, ready-to-eat și băuturi cu rotație rapidă.
+            Sincronizăm comanda cu ferestrele de livrare pentru a limita pierderile la raft.
+          </p>
+          <p>
+            Pentru produse sensibile operăm transport la temperatură controlată și monitorizăm traseul.
+            Oferim rapoarte de conformitate ușor de înțeles pentru audit.
+          </p>
+          <p>
+            Toate prețurile sunt transparente, cu discounturi volumice clar documentate în anexele de contract.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="icon" aria-hidden="true">📊</div>
+          <h3>Optimizare de sortiment bazată pe date</h3>
+          <p>
+            Analizăm bonul mediu, frecvența de cumpărare și elasticitatea prețului pe categorie pentru a decide
+            ce produse merită spațiu mai mare pe raft.
+          </p>
+          <p>
+            Construim planograme simple, cu etichete clare și poziționare a impulsului lângă casa de marcat
+            pentru a crește atașarea de coș.
+          </p>
+          <p>
+            Eliminăm SKU-urile redundante și introducem alternative locale, menținând aceeași varietate percepută.
+          </p>
+        </article>
+
+        <article class="card">
+          <div class="icon" aria-hidden="true">💡</div>
+          <h3>Soluții digitale în magazin</h3>
+          <p>
+            Implementăm etichete electronice, afișaje promo digitale și aplicații ușoare pentru re-comandă,
+            fără hardware scump și cu instruire minimă a personalului.
+          </p>
+          <p>
+            Integrare API cu POS-ul existent pentru sincronizarea stocului și alertare când anumite SKU-uri cad sub prag.
+          </p>
+          <p>
+            Dashboarduri săptămânale cu marjă, rotație și top produse pentru decizii rapide în back-office.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================
+       AVANTAJE — DE CE NOI
+       ======================================= -->
+  <section id="avantaje" class="section" aria-labelledby="titlu-avantaje">
+    <div class="container">
+      <span class="kicker">De ce să ne alegi</span>
+      <h2 id="titlu-avantaje">Mai puține pierderi, mai multă prospețime, decizii mai rapide</h2>
+      <div class="grid-3" style="margin-top:18px">
+        <div class="panel adv">
+          <div class="num">01</div>
+          <div>
+            <h3>Prospețime măsurabilă</h3>
+            <p>Rapoarte de raft și rotație, rotație FIFO, ferestre de livrare calibrate pe trafic real. Rezultatul:
+              pierderi reduse cu 12–18% după 8 săptămâni.</p>
+          </div>
+        </div>
+        <div class="panel adv">
+          <div class="num">02</div>
+          <div>
+            <h3>Trasabilitate & conformitate</h3>
+            <p>Lot și temperatură urmărite din depozit până în magazin. Documente de conformitate livrate automat
+              în arhiva digitală a partenerului.</p>
+          </div>
+        </div>
+        <div class="panel adv">
+          <div class="num">03</div>
+          <div>
+            <h3>Analiză de date la îndemână</h3>
+            <p>Dashboarduri săptămânale în limbaj simplu. Știi ce să extinzi, ce să reduci și când să rulezi promoții
+              fără a consuma timp din operare.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================
+       PROCES — CUM LUCRĂM
+       ======================================= -->
+  <section id="proces" class="section" aria-labelledby="titlu-proces">
+    <div class="container grid-2">
+      <div class="panel">
+        <span class="kicker">Plan clar</span>
+        <h2 id="titlu-proces">Cum lucrăm — 3 etape simple</h2>
+        <div class="timeline" aria-label="Pași de implementare">
+          <div class="step">
+            <h3>1) Diagnostic & plan de raft</h3>
+            <p>Audităm vânzările și spațiul, identificăm SKU-urile lente și propunem o planogramă de test.
+               Setăm indicatori (rotație, marjă, pierderi).</p>
+          </div>
+          <div class="step">
+            <h3>2) Pilot de 6–8 săptămâni <span class="arrow">→</span></h3>
+            <p>Rulăm pilotul pe un număr limitat de categorii, calibrăm frecvența de livrare și ajustăm prețurile
+               promoționale pe baza răspunsului clienților.</p>
+          </div>
+          <div class="step">
+            <h3>3) Scalare & rutină operațională <span class="arrow">→</span></h3>
+            <p>Extindem modelul către restul magazinului, automatizăm re-comanda și instituim raportarea recurentă
+               pentru a păstra rezultatele.</p>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <span class="kicker">Pregătit?</span>
+        <h3>Cerere rapidă de ofertă</h3>
+        <p>Trimite-ne un mesaj cu profilul magazinului tău (suprafață, POS, categorii critice).
+           Îți răspundem pe e-mail cu o propunere inițială în maximum două zile lucrătoare.</p>
+        <button class="btn" id="openFromProcess">Deschide formularul</button>
+        <p class="helper">Notă: formularul colectează doar informații esențiale (fără număr de telefon).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================
+       CALL TO ACTION — FORMULAR (buton)
+       ======================================= -->
+  <section class="section">
+    <div class="container panel" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div>
+        <span class="kicker">Hai să începem</span>
+        <h2>Vrei să testezi pe o categorie timp de 6 săptămâni?</h2>
+        <p class="helper">Un pilot controlat este cea mai rapidă cale de a vedea rezultatele în magazinul tău.</p>
+      </div>
+      <div>
+        <button class="btn" id="openFormCta">Solicită un pilot</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================
+       CONTACTE (adresă + e-mail)
+       ======================================= -->
+  <section id="contacte" class="section" aria-labelledby="titlu-contacte">
+    <div class="container grid-2">
+      <div class="panel">
+        <span class="kicker">Unde ne găsești</span>
+        <h2 id="titlu-contacte">Date de contact oficiale</h2>
+        <p><strong>Adresă:</strong> STR. GIUSEPPE GARIBALDI NR. 26A SC. B ET. 2 AP. 24, SECTORUL 2, București</p>
+        <p><strong>E-mail:</strong> <a href="mailto:info@amatradingpartners.pro">info@amatradingpartners.pro</a></p>
+        <p class="helper">Programarea vizitelor se face prin e-mail. Pentru siguranță și confidențialitate,
+          nu solicităm număr de telefon.</p>
+      </div>
+      <div class="panel">
+        <span class="kicker">Întreabă-ne orice</span>
+        <h3>Preferi un mesaj rapid?</h3>
+        <p>Deschide fereastra de contact și spune-ne despre magazinul tău. Răspundem punctual, cu pași clari.</p>
+        <button class="btn secondary" id="openFormAlt">Trimite mesaj</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================
+       FOOTER
+       ======================================= -->
+  <footer role="contentinfo">
+    <div class="container box">
+      <div>
+        <strong>AMA TRADING PARTNERS SRL</strong><br/>
+        Grocery & Convenience Retailers — București
+      </div>
+      <div>
+        <a href="#acasa">Înapoi sus</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =======================================
+       MODAL: FORMULAR DE CONTACT
+       ======================================= -->
+  <div class="modal-backdrop" id="backdrop" role="dialog" aria-modal="true" aria-labelledby="titlu-form">
+    <div class="modal" id="modalForm">
+      <header>
+        <h3 id="titlu-form">Trimite-ne un mesaj</h3>
+        <button class="close" id="closeForm" aria-label="Închide">
+          ✕
+        </button>
+      </header>
+
+      <form id="contactForm" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="nume">Nume și prenume</label>
+            <input id="nume" name="nume" type="text" autocomplete="name" required
+                   placeholder="Ex.: Andrei Ionescu" />
+            <span class="helper">Obligatoriu</span>
+          </div>
+
+          <div class="field">
+            <label for="email">Adresă de e-mail</label>
+            <input id="email" name="email" type="email" autocomplete="email" required
+                   placeholder="name@exemplu.ro" />
+            <span class="helper">Obligatoriu — vom contacta doar prin e-mail</span>
+          </div>
+
+          <div class="field full">
+            <label for="subiect">Subiect</label>
+            <input id="subiect" name="subiect" type="text" placeholder="Ex.: Pilot categorie lactate" />
+          </div>
+
+          <div class="field full">
+            <label for="mesaj">Mesaj</label>
+            <textarea id="mesaj" name="mesaj" rows="6" placeholder="Spune-ne câte ceva despre magazinul tău, suprafață, POS, categorii cheie…"></textarea>
+          </div>
+
+          <div class="field full">
+            <label style="display:flex;align-items:flex-start;gap:.6rem">
+              <input type="checkbox" id="consent" required />
+              <span>Sunt de acord ca datele furnizate să fie folosite exclusiv pentru a răspunde solicitării mele. Nu colectăm numere de telefon.</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;gap:.5rem;margin-top:10px">
+          <button type="button" class="btn secondary" id="cancelForm">Anulează</button>
+          <button type="submit" class="btn">Trimite</button>
+        </div>
+        <p class="helper">Prin trimitere confirmi că ai citit nota de confidențialitate. Nu folosim cookie-uri de tracking.</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- =======================================
+       MODAL: CONFIRMARE TRIMITERE
+       ======================================= -->
+  <div class="modal-backdrop" id="confirmBackdrop" role="dialog" aria-modal="true" aria-labelledby="titlu-confirm">
+    <div class="modal" id="modalConfirm">
+      <header>
+        <h3 id="titlu-confirm">Mulțumim! Mesajul a fost trimis.</h3>
+        <button class="close" id="closeConfirm" aria-label="Închide confirmarea">✕</button>
+      </header>
+      <p>Ți-am înregistrat solicitarea și îți vom răspunde pe e-mail în cel mai scurt timp.</p>
+      <div style="display:flex;justify-content:flex-end">
+        <button class="btn" id="okConfirm">Închide</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============================
+    // JS: deschiderea/închiderea modalului de contact
+    // ============================
+    const backdrop = document.getElementById('backdrop');
+    const confirmBackdrop = document.getElementById('confirmBackdrop');
+
+    const openFormButtons = [
+      document.getElementById('openForm'),
+      document.getElementById('heroOpen'),
+      document.getElementById('openFromProcess'),
+      document.getElementById('openFormCta'),
+      document.getElementById('openFormAlt'),
+    ].filter(Boolean);
+
+    const closeFormBtn = document.getElementById('closeForm');
+    const cancelFormBtn = document.getElementById('cancelForm');
+
+    function openForm(){
+      backdrop.style.display = 'grid';
+      document.getElementById('nume').focus({ preventScroll: true });
+    }
+    function closeForm(){
+      backdrop.style.display = 'none';
+    }
+    openFormButtons.forEach(btn => btn.addEventListener('click', openForm));
+    if (closeFormBtn) closeFormBtn.addEventListener('click', closeForm);
+    if (cancelFormBtn) cancelFormBtn.addEventListener('click', closeForm);
+    backdrop.addEventListener('click', (e)=>{ if(e.target === backdrop) closeForm(); });
+
+    // ============================
+    // Validare minimă + confirmare (fără backend)
+    // ============================
+    const form = document.getElementById('contactForm');
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    function showConfirm(){
+      backdrop.style.display = 'none';
+      confirmBackdrop.style.display = 'grid';
+      document.getElementById('okConfirm').focus({ preventScroll: true });
+    }
+    function closeConfirm(){
+      confirmBackdrop.style.display = 'none';
+    }
+
+    document.getElementById('closeConfirm').addEventListener('click', closeConfirm);
+    document.getElementById('okConfirm').addEventListener('click', closeConfirm);
+    confirmBackdrop.addEventListener('click', (e)=>{ if(e.target === confirmBackdrop) closeConfirm(); });
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      const nume = document.getElementById('nume');
+      const email = document.getElementById('email');
+      const consent = document.getElementById('consent');
+
+      let valid = true;
+
+      if(!nume.value.trim()){
+        valid = false; nume.setAttribute('aria-invalid','true');
+        nume.style.borderColor = '#fecaca';
+        nume.focus();
+      }else{
+        nume.removeAttribute('aria-invalid'); nume.style.borderColor = '';
+      }
+
+      if(valid && !emailRe.test(email.value.trim())){
+        valid = false; email.setAttribute('aria-invalid','true');
+        email.style.borderColor = '#fecaca'; email.focus();
+      }else if(valid){
+        email.removeAttribute('aria-invalid'); email.style.borderColor = '';
+      }
+
+      if(valid && !consent.checked){
+        valid = false; consent.focus();
+      }
+
+      if(valid){
+        // simulăm trimiterea; aici s-ar integra un endpoint backend
+        form.reset();
+        showConfirm();
+      }
+    });
+
+    // Accesibilitate: Escape pentru a închide modalele
+    window.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape'){
+        if(backdrop.style.display === 'grid') closeForm();
+        if(confirmBackdrop.style.display === 'grid') closeConfirm();
+      }
+    });
+  </script>
+</body>
+</html>
